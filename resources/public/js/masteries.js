@@ -9,11 +9,14 @@ var MasteryCell = React.createClass({
     let maxPoints = this.props.maxPoints
     this.setState({points: maxPoints >= updatedPoint ? updatedPoint : maxPoints})
   },
+  spriteUrl: function (id) {
+    return `http://ddragon.leagueoflegends.com/cdn/6.9.1/img/mastery/${id}.png`
+  },
   render: function () {
     return (
       <div className="mastery-cell" onClick={this.onClick}>
-        <div className="mastery_icon zam-sprite-masteries zam-sprite-masteries-6111">
-          <span style={{display: "inline-block", height: "50px", width: "50px"}} />
+        <div style={{backgroundImage: `url(${this.spriteUrl(this.props.id)})`}} className="mastery_icon">
+          <span style={{display: "inline-block", height: "68px", width: "4px"}} />
           <span className="mastery_rank unselectable">{this.state.points}/{this.props.maxPoints}</span>
         </div>
       </div>
@@ -25,7 +28,7 @@ var MasteryRow = React.createClass({
   render: function () {
     return (
       <div className="mastery-row">
-        <MasteryCell name="Fury" maxPoints="5"/>
+        <MasteryCell name="Fury" id="6111" maxPoints="5"/>
       </div>
     )
   }
