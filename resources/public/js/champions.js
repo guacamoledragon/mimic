@@ -20,7 +20,6 @@ var ChampionsGrid = React.createClass({
   getInitialState: function () {
     return {
       champions: []
-      , selectedChampion: ''
     }
   },
   componentDidMount: function () {
@@ -30,13 +29,9 @@ var ChampionsGrid = React.createClass({
       this.setState({champions: championList})
     }.bind(this))
   },
-  updateSelection: function (champion) {
-    this.setState({selectedChampion: champion})
-    return this.state
-  },
   render: function () {
-    let selectedChampion = this.state.selectedChampion
-    let updateSelection = this.updateSelection
+    let selectedChampion = this.props.selectedChampion
+    let setSelectedChampion = this.props.setSelectedChampion
 
     return (
       <ul>
@@ -44,7 +39,7 @@ var ChampionsGrid = React.createClass({
           return <ChampionImage
             key={ champion }
             isSelected={ champion === selectedChampion }
-            updateSelection={ updateSelection.bind(null, champion) }
+            updateSelection={ setSelectedChampion.bind(null, champion) }
             championName={ champion }/>
         })}
       </ul>
@@ -52,4 +47,22 @@ var ChampionsGrid = React.createClass({
   }
 })
 
-window.ChampionsGrid = ChampionsGrid
+window.MimicApp = React.createClass({
+  getInitialState: function () {
+    return {
+      selectedChampion: ''
+    }
+  },
+  setSelectedChampion: function (selectedChampion) {
+    this.setState({ selectedChampion })
+  },
+  render: function () {
+
+
+    return (
+      <div>
+        <ChampionsGrid setSelectedChampion={ this.setSelectedChampion } selectedChampion={ this.state.selectedChampion }/>
+      </div>
+    )
+  }
+})
