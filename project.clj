@@ -5,6 +5,8 @@
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [compojure "1.5.0"]
                  [ring/ring-defaults "0.2.0"]
+                 [ring/ring-devel "1.4.0"]
+                 [ring/ring-json "0.4.0"]
                  [clj-lolapi "0.1.0-SNAPSHOT"]]
   :plugins [[lein-ring "0.9.7"]]
   :ring {:handler mimic.handler/app}
