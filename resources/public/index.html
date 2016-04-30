@@ -4,9 +4,10 @@
   <meta charset="UTF-8">
   <title>Mimic</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
-<div id="greeting-div"></div>
+<div id="mimic-app"></div>
 
 <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
@@ -16,8 +17,8 @@
 <script type="text/babel" src="js/champions.js"></script>
 <script type="text/babel">
   ReactDOM.render(
-      <ChampionsGrid />,
-      document.getElementById('greeting-div')
+      <MimicApp />,
+      document.getElementById('mimic-app')
   );
 </script>
 </body>
