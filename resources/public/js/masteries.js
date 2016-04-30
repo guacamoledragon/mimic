@@ -7,7 +7,7 @@ var MasteryCell = React.createClass({
   onClick: function () {
     let updatedPoint = this.state.points + 1
     let maxPoints = this.props.maxPoints
-    this.setState({points: maxPoints >= updatedPoint ? updatedPoint : maxPoints})
+    this.setState({points: maxPoints >= updatedPoint ? updatedPoint : 0})
   },
   spriteUrl: function (id) {
     return `http://ddragon.leagueoflegends.com/cdn/6.9.1/img/mastery/${id}.png`
@@ -55,13 +55,15 @@ var MasteryTree = React.createClass({
 const MasteryPage = React.createClass({
  render: function () {
    return (
-     <div style={{overflow: "hidden", display: "flex", flexDirection: "row", height: "100%"}}>
-       <MasteryTree name="Ferocity"
-                    backgroundUrl="images/mastery-tree-1.jpg"/>
-       <MasteryTree name="Cunning"
-                    backgroundUrl="images/mastery-tree-2.jpg"/>
-       <MasteryTree name="Resolve"
-                    backgroundUrl="images/mastery-tree-3.jpg"/>
+     <div className="mastery-page-outer">
+       <div className="mastery-page-flex">
+         <MasteryTree name="Ferocity"
+                      backgroundUrl="images/mastery-tree-1.jpg"/>
+         <MasteryTree name="Cunning"
+                      backgroundUrl="images/mastery-tree-2.jpg"/>
+         <MasteryTree name="Resolve"
+                      backgroundUrl="images/mastery-tree-3.jpg"/>
+       </div>
      </div>
    )
  }

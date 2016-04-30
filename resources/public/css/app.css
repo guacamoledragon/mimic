@@ -10,3 +10,16 @@ img.champion-selected {
     -ms-user-select: none;
     user-select: none;
 }
+
+.mastery-page-outer {
+    height: 500px;
+    display: block;
+}
+
+.mastery-page-flex {
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: 838px;
+}
