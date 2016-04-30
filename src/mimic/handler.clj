@@ -13,9 +13,15 @@
     [in (PushbackReader. (io/reader "champions.edn"))]
     (read in)))
 
+(defn champions-by-name
+  [champions-db]
+  "Returns an array containing all champions"
+  (map name (keys champions-db)))
+
+
 (defroutes app-routes
   (GET "/" [] (resp/content-type (resp/resource-response "index.html" {:root "public"}) "text/html"))
-  (GET "/champion-icons" [] (resp/response (read-string (slurp "champions.edn"))))
+  (GET "/champions-by-name" [] (champions-by-name champions-db))
   (route/resources "/")
   (route/not-found "Not Found"))
 
