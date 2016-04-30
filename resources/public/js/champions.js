@@ -6,5 +6,24 @@ var ChampionImage = React.createClass({
   }
 })
 
+var ChampionsGrid = React.createClass({
+  getInitialState: function () {
+    return { champions: [] }
+  },
+  componentDidMount: function () {
+   $.get('/champions-by-name', function (result) {
+     this.setState({champions: JSON.parse(result)})
+   }.bind(this))
+  },
+  render: function () {
+    return (
+      <ul>
+        {this.state.champions.map(function (champion) {
+          return <ChampionImage key={champion} championName={champion} />
+        })}
+      </ul>
+    )
+  }
+})
 
-window.ChampionImage = ChampionImage
+window.ChampionsGrid = ChampionsGrid
