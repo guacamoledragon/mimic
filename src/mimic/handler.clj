@@ -15,7 +15,8 @@
 
 (defroutes app-routes
   (GET "/" [] (resp/content-type (resp/resource-response "index.html" {:root "public"}) "text/html"))
-  (GET "/champs" [] (resp/response (read-string (slurp "champions.edn"))))
+  (GET "/champion-icons" [] (resp/response (read-string (slurp "champions.edn"))))
+  (route/resources "/")
   (route/not-found "Not Found"))
 
 (def app

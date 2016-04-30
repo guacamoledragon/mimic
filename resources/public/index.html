@@ -3,8 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <title>Mimic</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 </head>
 <body>
-cheese
+<div id="greeting-div"></div>
+
+<script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="https://fb.me/react-15.0.0.js"></script>
+<script src="https://fb.me/react-dom-15.0.0.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
+<script type="text/babel" src="js/champions.js"></script>
+<script type="text/babel">
+  ReactDOM.render(
+      <ChampionImage championName="Aatrox"/>,
+      document.getElementById('greeting-div')
+  );
+</script>
 </body>
 </html>
