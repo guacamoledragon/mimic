@@ -23,11 +23,11 @@ var ChampionsGrid = React.createClass({
     }
   },
   componentDidMount: function () {
-    $.get('/champions-by-name', function (result) {
+    /*$.get('/champions-by-name', function (result) {
       let championList = JSON.parse(result).slice(0, 10)
 
       this.setState({champions: championList})
-    }.bind(this))
+    }.bind(this))*/
   },
   render: function () {
     let selectedChampion = this.props.selectedChampion

@@ -1,3 +1,25 @@
-img.champion-selected  {
+img.champion-selected {
     border: 1px solid yellow;
+}
+
+.unselectable {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.mastery-page-outer {
+    height: 500px;
+    display: block;
+}
+
+.mastery-page-flex {
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: 838px;
 }
