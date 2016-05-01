@@ -1,5 +1,6 @@
 (ns mimic.masteries
-  (require [com.rpl.specter :as s :refer [ALL LAST]]))
+  (require [com.rpl.specter :as s :refer [ALL LAST]]
+           [clojure.java.io :as io]))
 
 (def noop-mastery
   {:name ""
@@ -16,7 +17,11 @@
 (def masteries-db
   ; hook up to the actual service
   ;(query/static "na" ["mastery"] {:masteryListData "ranks"})
-  (read-string (slurp "masteries.edn")))
+  (-> "masteries.edn"
+      io/resource
+      io/file
+      slurp
+      read-string))
 
 (def mastery-catalog
   (:data
