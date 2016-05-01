@@ -5,7 +5,8 @@
             [ring.middleware.json :as json-middleware]
             [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
             [ring.middleware.reload :refer [wrap-reload]]
-            [clojure.java.io :as io])
+            [clojure.java.io :as io]
+            [mimic.masteries :as masteries])
   (:import (java.io PushbackReader)))
 
 (def champions-db
@@ -22,7 +23,8 @@
 (defroutes app-routes
   (GET "/" [] (resp/content-type (resp/resource-response "index.html" {:root "public"}) "text/html"))
   (context "/api" []
-           (GET "/champions-by-name" [] (resp/response (champions-by-name champions-db))))
+           (GET "/champions-by-name" [] (resp/response (champions-by-name champions-db)))
+           (GET "/mastery-tree" [] (resp/response masteries/mastery-tree)))
   (route/resources "/")
   (route/not-found "Not Found"))
 

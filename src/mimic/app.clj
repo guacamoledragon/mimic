@@ -1,9 +1,15 @@
 (ns mimic.app
+  (:use [com.rpl.specter])
   (:require [clojure.java.io :as io]
             [clojure.pprint :as pp]
-            [mimic.handler :as mh]
-            [clj-lolapi.core :as lol]))
+            [clj-lolapi.core :as lol]
+            [clj-lolapi.query :as query]))
 
 ;(pp/pprint mh/champions-db)
 
-;(pp/pprint (lol/masteries "na"))
+;(pp/pprint (query/static "na" ["mastery"] {:masteryListData "ranks"}))
+
+;(pp/pprint (mastery-rows :Ferocity mastery-tree))
+;(pp/pprint mastery-catalog)
+
+
