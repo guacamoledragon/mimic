@@ -1,5 +1,5 @@
 (ns mimic.handler
-  (:require [compojure.core :refer [GET defroutes]]
+  (:require [compojure.core :refer [GET defroutes context]]
             [compojure.route :as route]
             [ring.util.response :as resp]
             [ring.middleware.json :as json-middleware]
@@ -21,7 +21,8 @@
 
 (defroutes app-routes
   (GET "/" [] (resp/content-type (resp/resource-response "index.html" {:root "public"}) "text/html"))
-  (GET "/champions-by-name" [] (champions-by-name champions-db))
+  (context "/api" []
+           (GET "/champions-by-name" [] (resp/response (champions-by-name champions-db))))
   (route/resources "/")
   (route/not-found "Not Found"))
 
