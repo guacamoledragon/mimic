@@ -15,9 +15,9 @@ var MasteryCell = React.createClass({
   render: function () {
     return (
       <div className="mastery-cell" onClick={this.onClick}>
-        <div style={{backgroundImage: `url(${this.spriteUrl(this.props.id)})`}} className="mastery_icon">
+        <div style={{backgroundImage: `url(${this.spriteUrl(this.props.id)})`}} className="mastery-icon">
           <span style={{display: "inline-block", height: "68px", width: "4px"}} />
-          <span className="mastery_rank unselectable">{this.state.points}/{this.props.maxPoints}</span>
+          <span className="mastery-rank unselectable">{this.state.points}/{this.props.maxPoints}</span>
         </div>
       </div>
     )
@@ -47,13 +47,11 @@ var MasteryTree = React.createClass({
   render: function () {
     let tree = this.props.tree
     return (
-      <div>
-        <div className="mastery-tree" style={{background: `url(${this.state.backgroundUrl})`}}>
-          {this.props.rows.map(function (row, idx) {
-            return <MasteryRow key={`${tree}-${idx}`} cells={row} />
-          })}
-          <div className="mastery-tree-title">{this.props.name}: {this.state.points}</div>
-        </div>
+      <div className="mastery-tree" style={{background: `url(${this.state.backgroundUrl})`}}>
+        {this.props.rows.map(function (row, idx) {
+          return <MasteryRow key={`${tree}-${idx}`} cells={row} />
+        })}
+        <div className="mastery-tree-title">{this.props.name}: {this.state.points}</div>
       </div>
     )
   }
