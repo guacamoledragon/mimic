@@ -1,14 +1,26 @@
 (ns mimic.champions
-  (:require [clojure.java.io :as io])
+  (:require [clojure.java.io :as io]
+            [environ.core :refer [env]]
+            [clj-lolapi.query :as query]
+            [taoensso.timbre :refer [info]])
   (:import (java.io PushbackReader)))
 
 (defonce champions-db
-  (with-open
-    [in (PushbackReader. (-> "champions.edn"
-                             io/resource
-                             io/reader))]
-    (read in)))
+  (if (env :riot-api-key)
+    (do
+      (info "Using Riot API Key")
+      (query/static "na" ["champion"]))
+    (with-open
+      [in (PushbackReader. (-> "champions.edn"
+                               io/resource
+                               io/reader))]
+      (info "Using dev-resources: champions.edn")
+      (read in))))
 
 (def champions-by-name
   "Returns an array containing all champions"
-  (sort (map name (keys champions-db))))
+  (->> champions-db
+       :data
+       keys
+       (map name)
+       sort))
