@@ -7,6 +7,7 @@
                  [ring/ring-defaults "0.2.0"]
                  [ring/ring-devel "1.4.0"]
                  [ring/ring-json "0.4.0"]
+                 [com.rpl/specter "0.10.0"]
                  [clj-lolapi "0.1.0-SNAPSHOT"]]
   :plugins [[lein-ring "0.9.7"]]
   :ring {:handler mimic.handler/app

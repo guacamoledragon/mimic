@@ -18,16 +18,14 @@ var ChampionImage = React.createClass({
 
 var ChampionsGrid = React.createClass({
   getInitialState: function () {
-    return {
-      champions: []
-    }
+    return {champions: []}
   },
   componentDidMount: function () {
-    /*$.get('/champions-by-name', function (result) {
-      let championList = JSON.parse(result).slice(0, 10)
+    $.get('api/champions-by-name', champions => {
+      let championList = champions.slice(0, 10)
 
-      this.setState({champions: championList})
-    }.bind(this))*/
+      this.setState({champions})
+    })
   },
   render: function () {
     let selectedChampion = this.props.selectedChampion

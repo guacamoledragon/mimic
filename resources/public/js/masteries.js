@@ -26,12 +26,13 @@ var MasteryCell = React.createClass({
 
 var MasteryRow = React.createClass({
   render: function () {
-    console.log(this.props)
+    let filteredCells =
+      this.props.cells.filter(cell => {
+        return cell.name.length
+      })
     return (
       <div className="mastery-row">
-        {this.props.cells.map(function (cell) {
-          return <MasteryCell key={cell.name} {...cell} />
-        })}
+        {filteredCells.map(cell => <MasteryCell key={cell.name} {...cell} />)}
       </div>
     )
   }
@@ -59,32 +60,33 @@ var MasteryTree = React.createClass({
 })
 
 const MasteryPage = React.createClass({
- getDefaultProps: function () {
-   return {trees: [{ name: 'Ferocity'
-                   , img: 'mastery-tree-1.jpg'
-                   , rows: [[ { name: 'Fury'
-                              , id: 6111
-                              , maxPoints: 5}
-                            , { name: 'Sorcery'
-                              , id: 6114
-                              , maxPoints: 5}
-                            ]
-                           ]
-                   }
-                  ]
-          }
- },
- render: function () {
-   return (
-     <div className="mastery-page-outer">
-       <div className="mastery-page-flex">
-         {this.props.trees.map(function (tree) {
-           return <MasteryTree key={tree.name} tree={tree.name} {...tree} />
-         })}
-       </div>
-     </div>
-   )
- }
+  getInitialState: function () {
+    return {trees: []}
+  },
+  componentDidMount: function () {
+    $.get('api/mastery-tree', serverTrees => {
+      let trees =
+        Object.keys(serverTrees).map(tree => {
+          return { name: tree
+                 , img: `${tree.toLowerCase()}.jpg`
+                 , rows: serverTrees[tree]
+                 }
+        })
+
+      this.setState({trees})
+    })
+  },
+  render: function () {
+    return (
+      <div className="mastery-page-outer">
+        <div className="mastery-page-flex">
+          {this.state.trees.map(function (tree) {
+            return <MasteryTree key={tree.name} tree={tree.name} {...tree} />
+          })}
+        </div>
+      </div>
+    )
+  }
 })
 
 ReactDOM.render( <MasteryPage />
