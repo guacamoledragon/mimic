@@ -3,6 +3,7 @@
   :url "https://github.com/guacamoledragon/mimic"
   :min-lein-version "2.0.0"
   :dependencies [[org.clojure/clojure "1.8.0"]
+                 [com.taoensso/timbre "4.3.1"]
                  [compojure "1.5.0"]
                  [ring/ring-defaults "0.2.0"]
                  [ring/ring-devel "1.4.0"]

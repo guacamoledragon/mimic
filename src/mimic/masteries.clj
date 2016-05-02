@@ -1,6 +1,9 @@
 (ns mimic.masteries
   (require [com.rpl.specter :as s :refer [ALL LAST]]
-           [clojure.java.io :as io])
+           [clojure.java.io :as io]
+           [environ.core :refer [env]]
+           [clj-lolapi.query :as query]
+           [taoensso.timbre :refer [info]])
   (:import (java.io PushbackReader)))
 
 (def noop-mastery
@@ -16,14 +19,16 @@
     :maxPoints ranks}})
 
 (defonce masteries-db
-  ; hook up to the actual service
-  ;(query/static "na" ["mastery"] {:masteryListData "ranks"})
-  (with-open
-    [in (PushbackReader. (-> "masteries.edn"
-                             io/resource
-                             io/reader))]
-
-    (read in)))
+  (if (env :riot-api-key)
+    (do
+      (info "Using Riot API Key")
+      (query/static "na" ["mastery"] {:masteryListData "ranks,tree"}))
+    (with-open
+      [in (PushbackReader. (-> "masteries.edn"
+                               io/resource
+                               io/reader))]
+      (info "Using dev-resources: masteries.edn")
+      (read in))))
 
 
 (def mastery-catalog
