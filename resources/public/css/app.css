@@ -73,6 +73,10 @@ img.champion-selected {
     flex: 0 0 30%;
 }
 
+.mastery-none {
+    opacity: 0.3;
+}
+
 .mastery-icon {
     box-sizing: content-box;
     width: 50px;
