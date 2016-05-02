@@ -33,7 +33,7 @@ img.champion-selected {
     background: #333333;
     box-shadow: 0 0 2px black;
     padding: 10px;
-    margin-left: 2px;
+    margin: auto;
     min-height: 400px;
 }
 
