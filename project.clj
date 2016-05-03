@@ -13,8 +13,14 @@
                  [clj-lolapi "0.1.0-SNAPSHOT"]]
   :plugins [[lein-ring "0.9.7"]
             [lein-heroku "0.5.3"]]
-  :ring {:handler mimic.handler/app
+  :ring {:handler       mimic.handler/app
          :auto-refresh? true}
+  :heroku {:app-name      "mimic-app"
+           :jdk-version   "1.8"
+           :include-files ["target/mimic-0.1.0-SNAPSHOT-standalone.jar"]
+           :process-types {"web" "java -jar target/mimic-0.1.0-SNAPSHOT-standalone.jar"}}
+
   :profiles
   {:dev {:dependencies [[javax.servlet/servlet-api "2.5"]
-                        [ring/ring-mock "0.3.0"]]}})
+                        [ring/ring-mock "0.3.0"]]}}
+  :aliases {"uberjar" ["ring" "uberjar"]})
