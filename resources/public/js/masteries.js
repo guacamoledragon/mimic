@@ -1,13 +1,15 @@
 var MasteryCell = React.createClass({
   getInitialState: function () {
-    return {
-      points: 0
-    }
+    return { points: 0 }
   },
   onClick: function () {
     let updatedPoint = this.state.points + 1
     let maxPoints = this.props.maxPoints
-    this.setState({points: maxPoints >= updatedPoint ? updatedPoint : 0})
+    let points = maxPoints >= updatedPoint ? updatedPoint : 0
+    this.setState({points})
+
+    // Notify Parent that you got points!
+    this.props.updateCellPoints(points)
   },
   spriteUrl: function (id) {
     return `http://ddragon.leagueoflegends.com/cdn/6.9.1/img/mastery/${id}.png`
@@ -26,6 +28,17 @@ var MasteryCell = React.createClass({
 })
 
 var MasteryRow = React.createClass({
+  getInitialState: function () {
+    return { cellPoints: {} }
+  },
+  updatePoints: function (key, points) {
+    let cellPoints = _.assign(this.state.cellPoints, {[key]: points})
+    this.setState({cellPoints})
+    let sumPoints = _.values(cellPoints).reduce((c,p) => c + p)
+
+    // Notify parent that you got points!
+    this.props.updateRowPoints(sumPoints)
+  },
   render: function () {
     let filteredCells =
       this.props.cells.filter(cell => {
@@ -33,7 +46,8 @@ var MasteryRow = React.createClass({
       })
     return (
       <div className="mastery-row">
-        {filteredCells.map(cell => <MasteryCell key={cell.name} {...cell} />)}
+        {filteredCells.map(cell => <MasteryCell updateCellPoints={this.updatePoints.bind(null, cell.name)}
+                                                key={cell.name} {...cell} />)}
       </div>
     )
   }
@@ -43,14 +57,22 @@ var MasteryTree = React.createClass({
   getInitialState: function () {
     return { points: 0
            , backgroundUrl: `images/${this.props.img}`
+           , rowPoints: {}
            }
+  },
+  updatePoints: function (key, points) {
+    let rowPoints = _.assign(this.state.rowPoints, {[key]: points})
+    let totalPoints = _.values(rowPoints).reduce((c,p) => c + p)
+
+    this.setState({rowPoints, points: totalPoints})
   },
   render: function () {
     let tree = this.props.tree
     return (
       <div className="mastery-tree" style={{background: `url(${this.state.backgroundUrl})`}}>
-        {this.props.rows.map(function (row, idx) {
-          return <MasteryRow key={`${tree}-${idx}`} cells={row} />
+        {this.props.rows.map((row, idx) => {
+          let key = `${tree}-${idx}`
+          return <MasteryRow updateRowPoints={this.updatePoints.bind(null, key)} key={key} cells={row} />
         })}
         <div className="mastery-tree-title">{this.props.name}: {this.state.points}</div>
       </div>
@@ -72,6 +94,7 @@ const MasteryPage = React.createClass({
                  }
         })
 
+      console.log(trees)
       this.setState({trees})
     })
   },
