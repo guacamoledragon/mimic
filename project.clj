@@ -11,7 +11,8 @@
                  [com.rpl/specter "0.10.0"]
                  [environ "1.0.2"]
                  [clj-lolapi "0.1.0-SNAPSHOT"]]
-  :plugins [[lein-ring "0.9.7"]]
+  :plugins [[lein-ring "0.9.7"]
+            [lein-heroku "0.5.3"]]
   :ring {:handler mimic.handler/app
          :auto-refresh? true}
   :profiles
