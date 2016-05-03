@@ -16,5 +16,5 @@
          :auto-refresh? true}
   :profiles
   {:dev {:dependencies [[javax.servlet/servlet-api "2.5"]
-                        [ring/ring-mock "0.3.0"]]}}
-  :aliases {"uberjar" ["ring" "uberjar"]})
+                        [ring/ring-mock "0.3.0"]]}
+   :uberjar {:aot :all}})
