@@ -25,4 +25,6 @@
       (wrap-defaults site-defaults)))
 
 (defn -main []
-  (run-jetty app {:port (or (env :port) 3000)}))
+  (run-jetty app {:port
+                  (or (-> :port env read-string
+                          3000))}))
