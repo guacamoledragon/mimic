@@ -7,6 +7,7 @@
                  [compojure "1.5.0"]
                  [ring/ring-defaults "0.2.0"]
                  [ring/ring-devel "1.4.0"]
+                 [ring/ring-jetty-adapter "1.4.0"]
                  [ring/ring-json "0.4.0"]
                  [com.rpl/specter "0.10.0"]
                  [environ "1.0.2"]
@@ -17,4 +18,5 @@
          :auto-refresh? true}
   :profiles {:dev     {:dependencies [[javax.servlet/servlet-api "2.5"]
                                       [ring/ring-mock "0.3.0"]]}
-             :uberjar {:aot :all}})
+             :uberjar {:main mimic.handler
+                       :aot :all}})
