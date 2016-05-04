@@ -3,6 +3,8 @@ body {
     -webkit-background-size: 100%;
     background-size: 100%;
     color: #EEE;
+    padding-top: 70px;
+    padding-bottom: 70px;
 }
 
 .section {
@@ -19,6 +21,7 @@ img.champion-selected {
 
 .champion-grid {
     padding-left: 17px;
+    padding-bottom: 1em;
 }
 
 .unselectable {
@@ -113,6 +116,7 @@ img.champion-selected {
 }
 
 .stylish-input-group {
+    padding-top: 1em;
     padding-bottom: 1em;
 }
 
@@ -126,7 +130,7 @@ img.champion-selected {
     border-color: #ccc;
 }
 
-.stylish-input-group button {
+.stylish-input-group div {
     border: 0;
     background: transparent;
 }
