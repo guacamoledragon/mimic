@@ -4,7 +4,6 @@
             [ring.util.response :as resp]
             [ring.middleware.json :as json-middleware]
             [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
-            [ring.middleware.reload :refer [wrap-reload]]
             [mimic.masteries :as masteries]
             [mimic.champions :as champions]))
 
@@ -20,5 +19,4 @@
   (-> app-routes
       (json-middleware/wrap-json-body)
       (json-middleware/wrap-json-response)
-      (wrap-defaults site-defaults)
-      (wrap-reload)))
+      (wrap-defaults site-defaults)))
