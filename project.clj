@@ -1,4 +1,4 @@
-(defproject mimic "0.1.0"
+(defproject mimic "0.2.0-SNAPSHOT"
   :description "An application that helps a Summoner plan out their mastery selection"
   :url "https://github.com/guacamoledragon/mimic"
   :min-lein-version "2.0.0"
@@ -11,9 +11,9 @@
                  [ring/ring-json "0.4.0"]
                  [com.rpl/specter "0.10.0"]
                  [environ "1.0.2"]
-                 [clj-lolapi "0.1.0-20151118.172800-2"]]
+                 [clj-lolapi "0.1.0-SNAPSHOT"]]
   :plugins [[lein-ring "0.9.7"]]
-  :uberjar-name "mimic-0.1.0-standalone.jar"
+  :uberjar-name "0.2.0-SNAPSHOT-standalone.jar"
   :ring {:handler       mimic.handler/app
          :auto-refresh? true}
   :profiles {:dev     {:dependencies [[javax.servlet/servlet-api "2.5"]

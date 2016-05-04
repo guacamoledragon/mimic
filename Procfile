@@ -1,1 +1,1 @@
-web: java $JVM_OPTS -jar target/mimic-0.1.0-standalone.jar
+web: java $JVM_OPTS -jar target/mimic-0.2.0-SNAPSHOT-standalone.jar
