@@ -103,8 +103,6 @@ const MasteryPage = React.createClass({
                  , rows: serverTrees[tree]
                  }
         })
-
-      console.log(trees)
       this.setState({trees})
     })
   },
@@ -121,6 +119,4 @@ const MasteryPage = React.createClass({
   }
 })
 
-ReactDOM.render( <MasteryPage />
-               , document.getElementById('mastery-test')
-               )
+window.MasteryPage = MasteryPage
