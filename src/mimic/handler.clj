@@ -26,5 +26,6 @@
 
 (defn -main []
   (run-jetty app {:port
-                  (or (-> :port env read-string
-                          3000))}))
+                  (if-let [port (env :port)]
+                          (read-string port)
+                          3000)}))
