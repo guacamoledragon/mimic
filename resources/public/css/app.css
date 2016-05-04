@@ -12,7 +12,7 @@ body {
 }
 
 img.champion {
-    height: 43px;
+    height: 50px;
 }
 
 img.champion-selected {
@@ -21,6 +21,15 @@ img.champion-selected {
 
 .champion-grid {
     padding-left: 17px;
+    padding-bottom: 1em;
+}
+
+.mastery-page {
+    padding: 1em;
+}
+
+.champion-stats {
+    padding-top: 1em;
     padding-bottom: 1em;
 }
 
