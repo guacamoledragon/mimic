@@ -6,11 +6,19 @@ body {
 }
 
 .section {
-    background-color: rgba(255,255,255,0.2);
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+img.champion {
+    height: 43px;
 }
 
 img.champion-selected {
     border: 1px solid yellow;
+}
+
+.champion-grid {
+    padding-left: 17px;
 }
 
 .unselectable {
@@ -46,7 +54,7 @@ img.champion-selected {
     flex-direction: column;
     width: 100%;
     padding: 5px;
-    margin-right:1px;
+    margin-right: 1px;
     justify-content: space-around;
     background-size: 290px !important;
     border: 1px solid #111111;
@@ -102,4 +110,23 @@ img.champion-selected {
     border-radius: 3px;
     padding: 2px;
     border: 1px solid #ffd700;
+}
+
+.stylish-input-group {
+    padding-bottom: 1em;
+}
+
+.stylish-input-group .input-group-addon {
+    background: white !important;
+}
+
+.stylish-input-group .form-control {
+    border-right: 0;
+    box-shadow: 0 0 0;
+    border-color: #ccc;
+}
+
+.stylish-input-group button {
+    border: 0;
+    background: transparent;
 }
