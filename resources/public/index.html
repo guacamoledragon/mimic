@@ -15,100 +15,7 @@
         <div id="mastery-page"></div>
       </div>
       <div class="champion-stats row">
-        <div class="col-md-4">
-          <img class="img-responsive" src="http://ddragon.leagueoflegends.com/cdn/img/champion/loading/Aatrox_0.jpg" alt="Aatrox">
-          <blockquote>
-            Aatrox is a legendary warrior, one of only five that remain of an ancient race known as the Darkin. He
-            wields his massive blade with grace and poise, slicing through legions in a style that is hypnotic to
-            behold. With each foe felled, Aatrox's ..."
-          </blockquote>
-        </div>
-        <div class="col-md-8">
-          <table class="table table">
-            <tbody>
-            <tr>
-              <td class="row-header">attackrange</td>
-              <td>125</td>
-            </tr>
-            <tr>
-              <td class="row-header">mpperlevel</td>
-              <td>40</td>
-            </tr>
-            <tr>
-              <td class="row-header">mp</td>
-              <td>322.2</td>
-            </tr>
-            <tr>
-              <td class="row-header">attackdamage</td>
-              <td>51</td>
-            </tr>
-            <tr>
-              <td class="row-header">hp</td>
-              <td>574.24</td>
-            </tr>
-            <tr>
-              <td class="row-header">hpperlevel</td>
-              <td>93</td>
-            </tr>
-            <tr>
-              <td class="row-header">attackdamageperlevel</td>
-              <td>2.8</td>
-            </tr>
-            <tr>
-              <td class="row-header">armor</td>
-              <td>26.88</td>
-            </tr>
-            <tr>
-              <td class="row-header">mpregenperlevel</td>
-              <td>0.8</td>
-            </tr>
-            <tr>
-              <td class="row-header">hpregen</td>
-              <td>8.26</td>
-            </tr>
-            <tr>
-              <td class="row-header">critperlevel</td>
-              <td>0</td>
-            </tr>
-            <tr>
-              <td class="row-header">spellblockperlevel</td>
-              <td>0</td>
-            </tr>
-            <tr>
-              <td class="row-header">mpregen</td>
-              <td>6</td>
-            </tr>
-            <tr>
-              <td class="row-header">attackspeedperlevel</td>
-              <td>2.2</td>
-            </tr>
-            <tr>
-              <td class="row-header">spellblock</td>
-              <td>30</td>
-            </tr>
-            <tr>
-              <td class="row-header">movespeed</td>
-              <td>335</td>
-            </tr>
-            <tr>
-              <td class="row-header">attackspeedoffset</td>
-              <td>-0.02</td>
-            </tr>
-            <tr>
-              <td class="row-header">crit</td>
-              <td>0</td>
-            </tr>
-            <tr>
-              <td class="row-header">hpregenperlevel</td>
-              <td>0.75</td>
-            </tr>
-            <tr>
-              <td class="row-header">armorperlevel</td>
-              <td>3.0</td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
+        <div id="champion-stats"></div>
       </div>
     </div>
 
@@ -139,6 +46,7 @@
 
   ReactDOM.render(<MasteryPage />, document.getElementById('mastery-page'))
   ReactDOM.render(<MimicApp />, document.getElementById('mimic-app'))
+  ReactDOM.render(<ChampionStats />, document.getElementById('champion-stats'))
 </script>
 </body>
 </html>
