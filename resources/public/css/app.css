@@ -3,10 +3,38 @@ body {
     -webkit-background-size: 100%;
     background-size: 100%;
     color: #EEE;
+    padding-top: 70px;
+    padding-bottom: 70px;
+}
+
+.section {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+img.champion {
+    height: 63px;
 }
 
 img.champion-selected {
     border: 1px solid yellow;
+}
+
+.champion-stats blockquote {
+    text-align: justify;
+}
+
+.champion-grid {
+    padding-left: 17px;
+    padding-bottom: 1em;
+}
+
+.mastery-page {
+    padding: 1em;
+}
+
+.champion-stats {
+    padding-top: 1em;
+    padding-bottom: 1em;
 }
 
 .unselectable {
@@ -42,7 +70,7 @@ img.champion-selected {
     flex-direction: column;
     width: 100%;
     padding: 5px;
-    margin-right:1px;
+    margin-right: 1px;
     justify-content: space-around;
     background-size: 290px !important;
     border: 1px solid #111111;
@@ -98,4 +126,24 @@ img.champion-selected {
     border-radius: 3px;
     padding: 2px;
     border: 1px solid #ffd700;
+}
+
+.stylish-input-group {
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+.stylish-input-group .input-group-addon {
+    background: white !important;
+}
+
+.stylish-input-group .form-control {
+    border-right: 0;
+    box-shadow: 0 0 0;
+    border-color: #ccc;
+}
+
+.stylish-input-group div {
+    border: 0;
+    background: transparent;
 }

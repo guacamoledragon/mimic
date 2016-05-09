@@ -7,8 +7,19 @@
   <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
-<div id="mimic-app"></div>
-<div id="mastery-test"></div>
+<div class="container">
+    <h1>Mimic</h1>
+    <div id="mimic-app"></div>
+    <div class="col-md-9">
+      <div class="mastery-page row">
+        <div id="mastery-page"></div>
+      </div>
+      <div class="champion-stats row">
+        <div id="champion-stats"></div>
+      </div>
+    </div>
+
+</div>
 
 <script src="https://cdn.jsdelivr.net/lodash/4.11.2/lodash.js"></script>
 <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
@@ -19,10 +30,23 @@
 <script type="text/babel" src="js/champions.js"></script>
 <script type="text/babel" src="js/masteries.js"></script>
 <script type="text/babel">
-  ReactDOM.render(
-      <MimicApp />,
-      document.getElementById('mimic-app')
-  );
+  const MimicApp = React.createClass({
+    getInitialState: function () {
+      return {selectedChampion: ''}
+    },
+    setSelectedChampion: function (selectedChampion) {
+      this.setState({selectedChampion})
+    },
+    render: function () {
+      return <ChampionsGrid setSelectedChampion={ this.setSelectedChampion }
+                            selectedChampion={ this.state.selectedChampion }/>
+
+    }
+  })
+
+  ReactDOM.render(<MasteryPage />, document.getElementById('mastery-page'))
+  ReactDOM.render(<MimicApp />, document.getElementById('mimic-app'))
+  ReactDOM.render(<ChampionStats />, document.getElementById('champion-stats'))
 </script>
 </body>
 </html>

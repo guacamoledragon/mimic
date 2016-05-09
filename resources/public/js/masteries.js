@@ -11,13 +11,23 @@ var MasteryCell = React.createClass({
     // Notify Parent that you got points!
     this.props.updateCellPoints(points)
   },
+  onRightClick: function (event) {
+    event.preventDefault()
+
+    let updatedPoint = this.state.points - 1
+    let points = updatedPoint >= 0 ? updatedPoint : this.props.maxPoints
+    this.setState({points})
+
+    // Notify Parent that you got points!
+    this.props.updateCellPoints(points)
+  },
   spriteUrl: function (id) {
     return `http://ddragon.leagueoflegends.com/cdn/6.9.1/img/mastery/${id}.png`
   },
   render: function () {
     let cellClass = this.state.points ? "" : "mastery-none"
     return (
-      <div className={`mastery-cell ${cellClass}`} onClick={this.onClick}>
+      <div className={`mastery-cell ${cellClass}`} onClick={this.onClick} onContextMenu={this.onRightClick}>
         <div style={{backgroundImage: `url(${this.spriteUrl(this.props.id)})`}} className="mastery-icon">
           <span style={{display: "inline-block", height: "68px", width: "4px"}} />
           {this.props.maxPoints == 1 ? <span/> : <span className="mastery-rank unselectable">{this.state.points}/{this.props.maxPoints}</span>}
@@ -93,8 +103,6 @@ const MasteryPage = React.createClass({
                  , rows: serverTrees[tree]
                  }
         })
-
-      console.log(trees)
       this.setState({trees})
     })
   },
@@ -111,6 +119,4 @@ const MasteryPage = React.createClass({
   }
 })
 
-ReactDOM.render( <MasteryPage />
-               , document.getElementById('mastery-test')
-               )
+window.MasteryPage = MasteryPage
