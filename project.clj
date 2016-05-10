@@ -13,7 +13,7 @@
                  [environ "1.0.2"]
                  [clj-lolapi "0.1.0-SNAPSHOT"]]
   :plugins [[lein-ring "0.9.7"]]
-  :uberjar-name "0.2.0-SNAPSHOT-standalone.jar"
+  :uberjar-name "mimic-0.2.0-SNAPSHOT-standalone.jar"
   :ring {:handler       mimic.handler/app
          :auto-refresh? true}
   :profiles {:dev     {:dependencies [[javax.servlet/servlet-api "2.5"]
