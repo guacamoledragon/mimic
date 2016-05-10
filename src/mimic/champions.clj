@@ -23,7 +23,7 @@
   "Returns an array containing all champions"
   (->> champions-db
        (sort-by :name)
-       (mapv #(select-keys % [:id :key]))))
+       (mapv #(select-keys % [:id :key :name]))))
 
 (defn champion
   [id]

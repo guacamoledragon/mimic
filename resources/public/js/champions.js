@@ -45,6 +45,9 @@ const ChampionStats = React.createClass({
   componentWillReceiveProps: function (props) {
     $.get(`api/champion/${props.champion}`, champion => this.setState({champion}))
   },
+  blurb: function () {
+    return {__html: this.state.champion.blurb}
+  },
   render: function () {
     let champion = this.state.champion
     let championStats = <div className="col-md-4"></div>
@@ -55,9 +58,7 @@ const ChampionStats = React.createClass({
           <img className="img-responsive"
                src={`http://ddragon.leagueoflegends.com/cdn/img/champion/loading/${champion.key}_0.jpg`}
                alt={champion.name} />
-          <blockquote>
-            {champion.blurb}
-          </blockquote>
+          <blockquote dangerouslySetInnerHTML={this.blurb()} />
         </div>
       )
     }
