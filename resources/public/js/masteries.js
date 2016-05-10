@@ -24,8 +24,14 @@ var MasteryCell = React.createClass({
     let points = updatedPoint >= 0 ? updatedPoint : this.props.maxPoints
     this.setState({points})
 
-    // Notify Parent that you got points!
-    this.props.updateCellPoints(points)
+    let description = ''
+    if(0 < points) {
+      description = this.props.description[points - 1]
+    }
+
+    let cellState = {points, description}
+    this.setState(cellState)
+    this.props.updateCellPoints(cellState)
   },
   spriteUrl: function (id) {
     return `http://ddragon.leagueoflegends.com/cdn/6.9.1/img/mastery/${id}.png`
@@ -140,7 +146,7 @@ const MasteryPage = React.createClass({
       .first()
       .value()
 
-    let treeSummary = _.assign({}, summary, tree)
+    let treeSummary = _.assign({}, tree, summary)
     let trees = _.assign([], this.state.trees)
     trees[treeIdx] = treeSummary
 

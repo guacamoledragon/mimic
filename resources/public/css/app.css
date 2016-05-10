@@ -147,3 +147,17 @@ img.champion-selected {
     border: 0;
     background: transparent;
 }
+
+.nav > li > a {
+    border-radius: 0;
+    color: #EEEEEE;
+    background-color: #333333;
+}
+
+.nav > li > a.active {
+    background-color: #EEE;
+}
+
+.nav > li > a:hover {
+    color: #555;
+}
