@@ -27,5 +27,5 @@
 
 (defn champion
   [id]
-  (into {}
-        (filter #(= id (:id %)) champions-db)))
+  (query/static "na" ["champion" id] {:champData "blurb,stats"}))
+
