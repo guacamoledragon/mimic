@@ -46,25 +46,25 @@ const ChampionStats = React.createClass({
     $.get(`api/champion/${props.champion}`, champion => this.setState({champion}))
   },
   stats: function () {
-    const humanStats = { attackspeedoffset: 'Attac Speed Offset'
-                       , attackrange: 'Attack Range'
+    const humanStats = { hp: 'HP'
+                       , mp: 'MP'
+                       , hpregen: 'HP Regen'
+                       , hpregenperlevel: 'HP Regen per Level'
+                       , mpregen: 'MP Regen'
                        , mpregenperlevel: 'MP Regen per Level'
                        , mpperlevel: 'MP per Level'
-                       , mpregen: 'MP Regen'
-                       , hpregenperlevel: 'HP Regen per Level'
+                       , movespeed: 'Move Speed'
+                       , attackspeedoffset: 'Attack Speed Offset'
+                       , attackrange: 'Attack Range'
                        , attackdamageperlevel: 'Attack Damage per Level'
                        , attackspeedperlevel: 'Attack Speed per Level'
                        , crit: 'Crit'
                        , hpperlevel: 'HP per Level'
-                       , movespeed: 'Move Speed'
                        , spellblockperlevel: 'Magic Resist per Level'
                        , armorperlevel: 'Armor per Level'
-                       , hpregen: 'HP Regen'
                        , armor: 'Armor'
                        , spellblock: 'Magic Resist'
                        , attackdamage: 'Attack Damage'
-                       , hp: 'HP'
-                       , mp: 'MP'
                        , critperlevel: 'Crit per Level'
                        }
     let champion = this.state.champion
@@ -75,7 +75,6 @@ const ChampionStats = React.createClass({
   },
   render: function () {
     let champion = this.state.champion
-    window.champion = champion
     let championDescription = <div className="col-md-4"></div>
 
     if(!_.isEmpty(champion)) {
