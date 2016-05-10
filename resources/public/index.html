@@ -23,22 +23,22 @@
 <script type="text/babel">
   const MimicApp = React.createClass({
     getInitialState: function () {
-      return {selectedChampion: ''}
+      return {champion: ''}
     },
-    setSelectedChampion: function (selectedChampion) {
-      this.setState({selectedChampion})
+    setChampion: function (champion) {
+      this.setState({champion})
     },
     render: function () {
       return (
           <div>
-            <ChampionsGrid setSelectedChampion={ this.setSelectedChampion }
-                              selectedChampion={ this.state.selectedChampion }/>
+            <ChampionsGrid setSelectedChampion={ this.setChampion }
+                              selectedChampion={ this.state.champion }/>
             <div className="col-md-9">
               <div className="mastery-page row">
                 <MasteryPage />
               </div>
               <div class="champion-stats row">
-                <ChampionStats />
+                <ChampionStats champion={ 'Aatrox' }/>
               </div>
             </div>
           </div>

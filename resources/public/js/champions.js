@@ -155,6 +155,7 @@ const ChampionsGrid = React.createClass({
   componentDidMount: function () {
     $.get('api/champions-by-name', champions => {
       // let championList = champions.slice(0, 10)
+      window.champions = champions
       this.setState({champions})
     })
   },
