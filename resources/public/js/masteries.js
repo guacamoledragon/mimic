@@ -6,20 +6,32 @@ var MasteryCell = React.createClass({
     let updatedPoint = this.state.points + 1
     let maxPoints = this.props.maxPoints
     let points = maxPoints >= updatedPoint ? updatedPoint : 0
-    this.setState({points})
 
-    // Notify Parent that you got points!
-    this.props.updateCellPoints(points)
+    let description = ''
+    if(0 < points) {
+      description = this.props.description[points - 1]
+    }
+
+    let cellState = {points, description}
+    this.setState(cellState)
+    this.props.updateCellPoints(cellState)
   },
   onRightClick: function (event) {
+    // TODO: Update this one too!!!
     event.preventDefault()
 
     let updatedPoint = this.state.points - 1
     let points = updatedPoint >= 0 ? updatedPoint : this.props.maxPoints
     this.setState({points})
 
-    // Notify Parent that you got points!
-    this.props.updateCellPoints(points)
+    let description = ''
+    if(0 < points) {
+      description = this.props.description[points - 1]
+    }
+
+    let cellState = {points, description}
+    this.setState(cellState)
+    this.props.updateCellPoints(cellState)
   },
   spriteUrl: function (id) {
     return `http://ddragon.leagueoflegends.com/cdn/6.9.1/img/mastery/${id}.png`
@@ -39,15 +51,23 @@ var MasteryCell = React.createClass({
 
 var MasteryRow = React.createClass({
   getInitialState: function () {
-    return { cellPoints: {} }
+    return { cellPoints: {}, cellDescriptions: {} }
   },
-  updatePoints: function (key, points) {
-    let cellPoints = _.assign(this.state.cellPoints, {[key]: points})
-    this.setState({cellPoints})
+  updatePoints: function (key, cell) {
+    let cellPoints = _.assign(this.state.cellPoints, {[key]: cell.points})
+    let cellDescriptions = _.assign(this.state.cellDescriptions, {[key]: cell.description})
+    let rowSummary = {cellPoints, cellDescriptions}
+    this.setState(rowSummary)
+
     let sumPoints = _.values(cellPoints).reduce((c,p) => c + p)
+    let descriptions = _
+      .chain(cellDescriptions)
+      .filter(d => !_.isEmpty(d))
+      .map()
+      .value()
 
     // Notify parent that you got points!
-    this.props.updateRowPoints(sumPoints)
+    this.props.updateRowPoints({points: sumPoints, descriptions})
   },
   render: function () {
     let filteredCells =
@@ -68,13 +88,18 @@ var MasteryTree = React.createClass({
     return { points: 0
            , backgroundUrl: `images/${this.props.img}`
            , rowPoints: {}
+           , rowDescriptions: {}
            }
   },
-  updatePoints: function (key, points) {
-    let rowPoints = _.assign(this.state.rowPoints, {[key]: points})
-    let totalPoints = _.values(rowPoints).reduce((c,p) => c + p)
+  updatePoints: function (key, row) {
+    let rowPoints = _.assign(this.state.rowPoints, {[key]: row.points})
+    let rowDescriptions = _.assign(this.state.rowDescriptions, {[key]: row.descriptions})
 
-    this.setState({rowPoints, points: totalPoints})
+    let points = _.values(rowPoints).reduce((c,p) => c + p)
+    let descriptions = _.flatMap(rowDescriptions)
+
+    this.setState({rowPoints, rowDescriptions, points: points})
+    this.props.updateTree({points, descriptions})
   },
   render: function () {
     let tree = this.props.tree
@@ -106,12 +131,35 @@ const MasteryPage = React.createClass({
       this.setState({trees})
     })
   },
+  updateTree: function (treeName, summary) {
+    let treeIdx = -1
+    let tree = _
+      .chain(this.state.trees)
+      .filter((tree, i) => {
+        if(tree.name === treeName) {
+          treeIdx = i
+          return true
+        }
+
+        return false
+      })
+      .first()
+      .value()
+
+    let treeSummary = _.assign({}, tree, summary)
+    let trees = _.assign([], this.state.trees)
+    trees[treeIdx] = treeSummary
+
+    this.props.updatePage(trees)
+    this.setState({trees})
+  },
   render: function () {
+    window.trees = this.state.trees
     return (
       <div className="mastery-page-outer">
         <div className="mastery-page-flex">
-          {this.state.trees.map(function (tree) {
-            return <MasteryTree key={tree.name} tree={tree.name} {...tree} />
+          {this.state.trees.map(tree => {
+            return <MasteryTree updateTree={this.updateTree.bind(null, tree.name)} key={tree.name} tree={tree.name} {...tree} />
           })}
         </div>
       </div>

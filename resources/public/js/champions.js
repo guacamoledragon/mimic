@@ -43,7 +43,8 @@ const ChampionStats = React.createClass({
     return { champion: {} }
   },
   componentWillReceiveProps: function (props) {
-    $.get(`api/champion/${props.champion}`, champion => this.setState({champion}))
+    if(this.state.champion.id !== props.champion)
+      $.get(`api/champion/${props.champion}`, champion => this.setState({champion}))
   },
   stats: function () {
     const humanStats = { hp: 'HP'
@@ -88,6 +89,27 @@ const ChampionStats = React.createClass({
         )
       }, [])
 
+      let masterySummary = (
+        <div>
+          <h2>Cunning</h2>
+          <h2>Ferocity</h2>
+          <h2>Resolve</h2>
+        </div>
+      )
+      if(!_.isEmpty(this.props.masteryPage)) {
+        masterySummary =
+          _.map(this.props.masteryPage, (tree => {
+            return (
+              <div key={tree.name}>
+                <h2>{tree.name}</h2>
+                <ul>
+                  {_.map(tree.descriptions, (desc => <li key={desc}>{desc}</li>))}
+                </ul>
+              </div>
+            )
+          }))
+      }
+
       championDescription = (
         <div id="champion-stats">
           <div className="col-md-4">
@@ -97,11 +119,25 @@ const ChampionStats = React.createClass({
             <blockquote dangerouslySetInnerHTML={this.blurb()} />
           </div>
           <div className="col-md-8">
-            <table className="table table">
-              <tbody>
-              {championStats}
-              </tbody>
-            </table>
+            <div>
+              <ul className="nav nav-tabs navbar-right">
+                <li className="active"><a href="#stats" data-toggle="tab">Stats Summary</a></li>
+                <li className=""><a href="#mastery" data-toggle="tab">Mastery Summary</a></li>
+              </ul>
+              <div className="clearfix"></div>
+              <div className="tab-content">
+                <div className="tab-pane" id="stats">
+                  <table className="table">
+                    <tbody>
+                    {championStats}
+                    </tbody>
+                  </table>
+                </div>
+                <div className="tab-pane active" id="mastery">
+                  {masterySummary}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       )

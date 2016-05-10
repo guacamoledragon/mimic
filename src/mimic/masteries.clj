@@ -1,5 +1,5 @@
 (ns mimic.masteries
-  (require [com.rpl.specter :as s :refer [ALL LAST]]
+  (require [com.rpl.specter :as s :refer [ALL VAL LAST]]
            [clojure.java.io :as io]
            [environ.core :refer [env]]
            [clj-lolapi.query :as query]
@@ -11,12 +11,58 @@
    :id 0
    :maxPoints 0})
 
+(defonce mastery-stats
+         [{:name "Fury"
+           :type :percent
+           :stat {:bonusattackspeed [0.8, 1.6, 2.4, 3.2, 4.0]}}
+          {:name "Sorcery"
+           :type :percent
+           :stat {:spelldamage [0.4, 0.8, 1.2, 1.6, 2.0]}}
+          {:name "Vampirism"
+           :type :percent
+           :stat {:spellvamp [0.4, 0.8, 1.2, 1.6, 2.0]}}
+          {:name "Natural Talent"
+           :type :flat
+           :stat {:attackdamageperlevel [0.11, 0.22, 0.33, 0.44, 0.55]
+                  :spelldamageperlevel  [0.16, 0.32, 0.50, 0.66, 0.83]}}
+          {:name "Battering Blows"
+           :type :percent
+           :stat {:armorpen [1.4, 2.8, 4.2, 5.6, 7.0]}}
+          {:name "Piercing Thoughts"
+           :type :percent
+           :stat {:spellpen [1.4, 2.8, 4.2, 5.6, 7.0]}}
+          {:name "Precision"
+           :type :flat
+           :stat {:armorpenperlevel [0.06, 0.12, 0.18, 0.24, 0.30]
+                  :spellpenperlevel [0.6, 1.2, 1.8, 2.4, 3.0]}}
+          {:name "Intelligence"
+           :type :percent
+           :stat {:cdr [1, 2, 3, 4, 5]}}
+          {:name "Recovery"
+           :type :flat
+           :stat {:hpregen [0.4, 0.8, 1.2, 1.6, 2.0]}}
+          {:name "Unyielding"
+           :type :percent
+           :stat {:armor      [1, 2, 3, 4, 5]
+                  :spellblock [1, 2, 3, 4, 5]}}
+          {:name "Veteran's Scars"
+           :type :flat
+           :stat {:hp [9, 18, 27, 36, 45]}}])
+
+
 (defn transform-mastery
-  [[masteryId {:keys [id name ranks]}]]
-  {masteryId
-   {:name      name
-    :id        id
-    :maxPoints ranks}})
+  [[masteryId {:keys [id name ranks description]}]]
+  (let [stats (->> mastery-stats
+                  (s/select [ALL VAL :name #(= % name)])
+                  first
+                  first)]
+    {masteryId
+     (merge
+       stats
+       {:name      name
+        :id        id
+        :description description
+        :maxPoints ranks})}))
 
 (defonce masteries-db
   (if (env :riot-api-key)

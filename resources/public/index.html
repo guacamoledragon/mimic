@@ -28,6 +28,9 @@
     setChampion: function (champion) {
       this.setState({champion})
     },
+    updateMasteryPage: function (masteryPage) {
+      this.setState({masteryPage})
+    },
     render: function () {
       return (
           <div>
@@ -35,10 +38,10 @@
                               selectedChampion={ this.state.champion }/>
             <div className="col-md-9">
               <div className="mastery-page row">
-                <MasteryPage />
+                <MasteryPage updatePage={ this.updateMasteryPage } />
               </div>
               <div className="champion-stats row">
-                <ChampionStats champion={ this.state.champion }/>
+                <ChampionStats champion={ this.state.champion } masteryPage={this.state.masteryPage} />
               </div>
             </div>
           </div>
