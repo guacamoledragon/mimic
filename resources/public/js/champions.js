@@ -46,6 +46,9 @@ const ChampionStats = React.createClass({
               behold. With each foe felled, Aatrox's ...`
            }
   },
+  componentDidMount: function () {
+    
+  },
   render: function () {
     return (
       <div>
