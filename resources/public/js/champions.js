@@ -1,4 +1,4 @@
-var ChampionImage = React.createClass({
+const ChampionImage = React.createClass({
   getClassName: function () {
     return this.props.isSelected ? 'champion-selected' : ''
   },
@@ -148,20 +148,19 @@ const ChampionStats = React.createClass({
   }
 })
 
-var ChampionsGrid = React.createClass({
+const ChampionsGrid = React.createClass({
   getInitialState: function () {
     return {champions: []}
   },
   componentDidMount: function () {
     $.get('api/champions-by-name', champions => {
-      let championList = champions.slice(0, 10)
-
+      // let championList = champions.slice(0, 10)
       this.setState({champions})
     })
   },
   filterChampions: function (query) {
     this.setState({
-      filteredChampions: this.state.champions.filter(champion => champion.toLowerCase().indexOf(query.toLowerCase()) != -1)
+      filteredChampions: this.state.champions.filter(champion => champion.name.toLowerCase().indexOf(query.toLowerCase()) != -1)
     })
   },
   render: function () {
@@ -181,10 +180,10 @@ var ChampionsGrid = React.createClass({
           <div className="col-md-12 champion-grid">
             {champions.map(function (champion) {
               return <ChampionImage
-                key={ champion }
-                isSelected={ champion === selectedChampion }
-                updateSelection={ setSelectedChampion.bind(null, champion) }
-                championName={ champion }/>
+                key={ champion.id }
+                isSelected={ champion.id === selectedChampion }
+                updateSelection={ setSelectedChampion.bind(null, champion.id) }
+                championName={ champion.key }/>
             })}
           </div>
         </div>

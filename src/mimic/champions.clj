@@ -19,8 +19,7 @@
 
 (def champions-by-name
   "Returns an array containing all champions"
-  (->> champions-db
-       :data
-       keys
-       (map name)
-       sort))
+  (mapv second
+        (->> champions-db
+             :data
+             (sort-by #(-> % val :name)))))
