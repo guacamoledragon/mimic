@@ -39,27 +39,32 @@ const ChampionSearch = React.createClass({
 })
 
 const ChampionStats = React.createClass({
-  getDefaultProps: function () {
-    return { champion: 'Aatrox'
-           , blurb: `Aatrox is a legendary warrior, one of only five that remain of an ancient race known as the Darkin. He
-              wields his massive blade with grace and poise, slicing through legions in a style that is hypnotic to
-              behold. With each foe felled, Aatrox's ...`
-           }
+  getInitialState: function () {
+    return { champion: {} }
   },
-  componentDidMount: function () {
-    
+  componentWillReceiveProps: function (props) {
+    $.get(`api/champion/${props.champion}`, champion => this.setState({champion}))
   },
   render: function () {
-    return (
-      <div>
+    let champion = this.state.champion
+    let championStats = <div className="col-md-4"></div>
+
+    if(!_.isEmpty(champion)) {
+      championStats = (
         <div className="col-md-4">
           <img className="img-responsive"
-               src={`http://ddragon.leagueoflegends.com/cdn/img/champion/loading/${this.props.champion}_0.jpg`}
-               alt={this.props.champion} />
-            <blockquote>
-              {this.props.blurb}
-            </blockquote>
+               src={`http://ddragon.leagueoflegends.com/cdn/img/champion/loading/${champion.key}_0.jpg`}
+               alt={champion.name} />
+          <blockquote>
+            {champion.blurb}
+          </blockquote>
         </div>
+      )
+    }
+
+    return (
+      <div>
+        {championStats}
         <div className="col-md-8">
           <table className="table table">
             <tbody>
@@ -156,11 +161,7 @@ const ChampionsGrid = React.createClass({
     return {champions: []}
   },
   componentDidMount: function () {
-    $.get('api/champions-by-name', champions => {
-      // let championList = champions.slice(0, 10)
-      window.champions = champions
-      this.setState({champions})
-    })
+    $.get('api/champions-by-name', champions => this.setState({champions}))
   },
   filterChampions: function (query) {
     this.setState({
