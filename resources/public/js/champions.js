@@ -43,7 +43,8 @@ const ChampionStats = React.createClass({
     return { champion: {} }
   },
   componentWillReceiveProps: function (props) {
-    $.get(`api/champion/${props.champion}`, champion => this.setState({champion}))
+    if(this.state.champion.id !== props.champion)
+      $.get(`api/champion/${props.champion}`, champion => this.setState({champion}))
   },
   stats: function () {
     const humanStats = { hp: 'HP'
