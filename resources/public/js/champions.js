@@ -39,112 +39,75 @@ const ChampionSearch = React.createClass({
 })
 
 const ChampionStats = React.createClass({
-  getDefaultProps: function () {
-    return { champion: 'Aatrox'
-           , blurb: `Aatrox is a legendary warrior, one of only five that remain of an ancient race known as the Darkin. He
-              wields his massive blade with grace and poise, slicing through legions in a style that is hypnotic to
-              behold. With each foe felled, Aatrox's ...`
-           }
+  getInitialState: function () {
+    return { champion: {} }
+  },
+  componentWillReceiveProps: function (props) {
+    $.get(`api/champion/${props.champion}`, champion => this.setState({champion}))
+  },
+  stats: function () {
+    const humanStats = { hp: 'HP'
+                       , mp: 'MP'
+                       , hpregen: 'HP Regen'
+                       , hpregenperlevel: 'HP Regen per Level'
+                       , mpregen: 'MP Regen'
+                       , mpregenperlevel: 'MP Regen per Level'
+                       , mpperlevel: 'MP per Level'
+                       , movespeed: 'Move Speed'
+                       , attackspeedoffset: 'Attack Speed Offset'
+                       , attackrange: 'Attack Range'
+                       , attackdamageperlevel: 'Attack Damage per Level'
+                       , attackspeedperlevel: 'Attack Speed per Level'
+                       , crit: 'Crit'
+                       , hpperlevel: 'HP per Level'
+                       , spellblockperlevel: 'Magic Resist per Level'
+                       , armorperlevel: 'Armor per Level'
+                       , armor: 'Armor'
+                       , spellblock: 'Magic Resist'
+                       , attackdamage: 'Attack Damage'
+                       , critperlevel: 'Crit per Level'
+                       }
+    let champion = this.state.champion
+    return _.mapKeys(champion.stats, (value, key) => humanStats[key])
+  },
+  blurb: function () {
+    return {__html: this.state.champion.blurb}
   },
   render: function () {
-    return (
-      <div>
-        <div className="col-md-4">
-          <img className="img-responsive"
-               src={`http://ddragon.leagueoflegends.com/cdn/img/champion/loading/${this.props.champion}_0.jpg`}
-               alt={this.props.champion} />
-            <blockquote>
-              {this.props.blurb}
-            </blockquote>
+    let champion = this.state.champion
+    let championDescription = <div className="col-md-4"></div>
+
+    if(!_.isEmpty(champion)) {
+      let championStats =
+        _.transform(this.stats(), (result, value, stat) => {
+        result.push(
+          <tr key={stat}>
+            <td className="row-header">{stat}</td>
+            <td>{value}</td>
+          </tr>
+        )
+      }, [])
+
+      championDescription = (
+        <div id="champion-stats">
+          <div className="col-md-4">
+            <img className="img-responsive"
+                 src={`http://ddragon.leagueoflegends.com/cdn/img/champion/loading/${champion.key}_0.jpg`}
+                 alt={champion.name} />
+            <blockquote dangerouslySetInnerHTML={this.blurb()} />
+          </div>
+          <div className="col-md-8">
+            <table className="table table">
+              <tbody>
+              {championStats}
+              </tbody>
+            </table>
+          </div>
         </div>
-        <div className="col-md-8">
-          <table className="table table">
-            <tbody>
-            <tr>
-              <td className="row-header">attackrange</td>
-              <td>125</td>
-            </tr>
-            <tr>
-              <td className="row-header">mpperlevel</td>
-              <td>40</td>
-            </tr>
-            <tr>
-              <td className="row-header">mp</td>
-              <td>322.2</td>
-            </tr>
-            <tr>
-              <td className="row-header">attackdamage</td>
-              <td>51</td>
-            </tr>
-            <tr>
-              <td className="row-header">hp</td>
-              <td>574.24</td>
-            </tr>
-            <tr>
-              <td className="row-header">hpperlevel</td>
-              <td>93</td>
-            </tr>
-            <tr>
-              <td className="row-header">attackdamageperlevel</td>
-              <td>2.8</td>
-            </tr>
-            <tr>
-              <td className="row-header">armor</td>
-              <td>26.88</td>
-            </tr>
-            <tr>
-              <td className="row-header">mpregenperlevel</td>
-              <td>0.8</td>
-            </tr>
-            <tr>
-              <td className="row-header">hpregen</td>
-              <td>8.26</td>
-            </tr>
-            <tr>
-              <td className="row-header">critperlevel</td>
-              <td>0</td>
-            </tr>
-            <tr>
-              <td className="row-header">spellblockperlevel</td>
-              <td>0</td>
-            </tr>
-            <tr>
-              <td className="row-header">mpregen</td>
-              <td>6</td>
-            </tr>
-            <tr>
-              <td className="row-header">attackspeedperlevel</td>
-              <td>2.2</td>
-            </tr>
-            <tr>
-              <td className="row-header">spellblock</td>
-              <td>30</td>
-            </tr>
-            <tr>
-              <td className="row-header">movespeed</td>
-              <td>335</td>
-            </tr>
-            <tr>
-              <td className="row-header">attackspeedoffset</td>
-              <td>-0.02</td>
-            </tr>
-            <tr>
-              <td className="row-header">crit</td>
-              <td>0</td>
-            </tr>
-            <tr>
-              <td className="row-header">hpregenperlevel</td>
-              <td>0.75</td>
-            </tr>
-            <tr>
-              <td className="row-header">armorperlevel</td>
-              <td>3.0</td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    )
+      )
+    }
+
+    return championDescription
   }
 })
 
@@ -153,10 +116,7 @@ const ChampionsGrid = React.createClass({
     return {champions: []}
   },
   componentDidMount: function () {
-    $.get('api/champions-by-name', champions => {
-      // let championList = champions.slice(0, 10)
-      this.setState({champions})
-    })
+    $.get('api/champions-by-name', champions => this.setState({champions}))
   },
   filterChampions: function (query) {
     this.setState({

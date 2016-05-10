@@ -14,6 +14,7 @@
   (GET "/" [] (resp/content-type (resp/resource-response "index.html" {:root "public"}) "text/html"))
   (context "/api" []
            (GET "/champions-by-name" [] (resp/response champions/champions-by-name))
+           (GET "/champion/:id{[0-9]+}" [id] (resp/response (champions/champion (Integer/parseInt id))))
            (GET "/mastery-tree" [] (resp/response masteries/mastery-tree)))
   (route/resources "/")
   (route/not-found "Not Found"))

@@ -10,15 +10,6 @@
 <div class="container">
     <h1>Mimic</h1>
     <div id="mimic-app"></div>
-    <div class="col-md-9">
-      <div class="mastery-page row">
-        <div id="mastery-page"></div>
-      </div>
-      <div class="champion-stats row">
-        <div id="champion-stats"></div>
-      </div>
-    </div>
-
 </div>
 
 <script src="https://cdn.jsdelivr.net/lodash/4.11.2/lodash.js"></script>
@@ -32,21 +23,30 @@
 <script type="text/babel">
   const MimicApp = React.createClass({
     getInitialState: function () {
-      return {selectedChampion: ''}
+      return {champion: ''}
     },
-    setSelectedChampion: function (selectedChampion) {
-      this.setState({selectedChampion})
+    setChampion: function (champion) {
+      this.setState({champion})
     },
     render: function () {
-      return <ChampionsGrid setSelectedChampion={ this.setSelectedChampion }
-                            selectedChampion={ this.state.selectedChampion }/>
-
+      return (
+          <div>
+            <ChampionsGrid setSelectedChampion={ this.setChampion }
+                              selectedChampion={ this.state.champion }/>
+            <div className="col-md-9">
+              <div className="mastery-page row">
+                <MasteryPage />
+              </div>
+              <div className="champion-stats row">
+                <ChampionStats champion={ this.state.champion }/>
+              </div>
+            </div>
+          </div>
+      )
     }
   })
 
-  ReactDOM.render(<MasteryPage />, document.getElementById('mastery-page'))
   ReactDOM.render(<MimicApp />, document.getElementById('mimic-app'))
-  ReactDOM.render(<ChampionStats />, document.getElementById('champion-stats'))
 </script>
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
