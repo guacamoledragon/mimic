@@ -30,12 +30,12 @@
     },
     updateMasteryPage: function (masteryPage) {
       this.setState({masteryPage})
+      console.log(this.state)
     },
     render: function () {
       return (
           <div>
-            <ChampionsGrid setSelectedChampion={ this.setChampion }
-                              selectedChampion={ this.state.champion }/>
+
             <div className="col-md-9">
               <div className="mastery-page row">
                 <MasteryPage updatePage={ this.updateMasteryPage } />
