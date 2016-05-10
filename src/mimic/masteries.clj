@@ -1,5 +1,5 @@
 (ns mimic.masteries
-  (require [com.rpl.specter :as s :refer [ALL LAST]]
+  (require [com.rpl.specter :as s :refer [ALL VAL LAST]]
            [clojure.java.io :as io]
            [environ.core :refer [env]]
            [clj-lolapi.query :as query]
@@ -51,11 +51,18 @@
 
 
 (defn transform-mastery
-  [[masteryId {:keys [id name ranks]}]]
-  {masteryId
-   {:name      name
-    :id        id
-    :maxPoints ranks}})
+  [[masteryId {:keys [id name ranks description]}]]
+  (let [stats (->> mastery-stats
+                  (s/select [ALL VAL :name #(= % name)])
+                  first
+                  first)]
+    {masteryId
+     (merge
+       stats
+       {:name      name
+        :id        id
+        :description description
+        :maxPoints ranks})}))
 
 (defonce masteries-db
   (if (env :riot-api-key)
